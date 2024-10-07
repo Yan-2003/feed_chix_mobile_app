@@ -60,6 +60,18 @@ export default function DashboardScreen() {
                 </View>
                 <TouchableOpacity style={styles.environtment_content}>
                     <Text style={styles.text_label_light}>Environment</Text>
+                    <View style={styles.environment_content_box}>
+                        <View style={styles.environment_box}>
+                            <Image source={require('../assets/Images/thermometer.png')} style={styles.env_img} />
+                            <Text style={styles.f_big}>0 °C</Text>
+                            <Text style={styles.font_s_gray} >Temperature</Text>
+                        </View>
+                        <View style={styles.environment_box}>
+                            <Image source={require('../assets/Images/humidity.png')} style={styles.env_img} />
+                            <Text style={styles.f_big}>0 %</Text>
+                            <Text style={styles.font_s_gray} >Humidity</Text>
+                        </View>
+                    </View>
                 </TouchableOpacity>
                 <View style={styles.food_water_container}>
                     <View>
@@ -84,12 +96,63 @@ export default function DashboardScreen() {
                         </View>
                     </View>
                 </View>
+                <TouchableOpacity style={styles.light_control}>
+                    <Image source={require('../assets/Images/light-bulb.png')} style={styles.env_img} />
+                    <Text style={styles.f_gray}>Light Control</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
+
+    light_control : {
+        alignSelf : 'center',
+        marginTop : 10,
+        width : '95%',
+        height : 85,
+        borderWidth : 1,
+        borderColor : '#D9D9D9',
+        borderRadius : 15,
+        flex : 0,
+        flexDirection : 'row',
+        alignItems : 'center',
+        paddingLeft : 20,
+        paddingRight : 20,
+    },
+
+    f_gray : {
+        color : '#5E5E5E'
+    },
+
+    f_big : {
+        fontSize : 25,
+    },
+
+    env_img : {
+        width : 40,
+        height :40,
+    },
+
+    environment_box : {
+        justifyContent : 'center', 
+        alignItems : 'center',
+        width : 100, 
+        height : 100,
+        backgroundColor : 'white',
+        borderRadius : 15,
+    },
+
+
+    environment_content_box : {
+        height : 'auto',
+        flex : 1,
+        flexDirection : 'row',
+        justifyContent : 'space-evenly', 
+        alignItems : 'center',
+    },
+
 
     font_s : {
         fontSize : 10,
@@ -124,7 +187,7 @@ const styles = StyleSheet.create({
     },
     environtment_content : {
         marginTop : 10,
-        width : '100%',
+        width : 'auto',
         height : 160,
         backgroundColor : '#47626D',
         borderRadius : 15,
@@ -142,10 +205,8 @@ const styles = StyleSheet.create({
 
     
     food_water_container : {
-        flex: 1, 
         flexDirection : 'row',
         width : 'auto',
-        height : 230,
         justifyContent : 'center',
         marginTop : 10,
         gap : 10
