@@ -15,7 +15,7 @@ export default function DashboardScreen() {
 
     const fetchFoodWeight = async ()=>{
         try {
-            const response = await axios.get("http://192.168.1.24:8080/api/foodWeight")
+            const response = await axios.get("http://192.168.1.24:8080/api/food/weight")
             setfoodWeight(response.data.weight)
             console.log(response.data)
         } catch (error) {
@@ -27,7 +27,7 @@ export default function DashboardScreen() {
 
     const fetchWaterCapacity = async ()=>{
         try {
-            const response = await axios.get("http://192.168.1.24:8080/api/waterCapacity")
+            const response = await axios.get("http://192.168.1.24:8080/api/water/capacity")
             setwaterCapacity(response.data.capacity)
             console.log(response.data)
         } catch (error) {
@@ -87,14 +87,31 @@ export default function DashboardScreen() {
                             <Text style={styles.font_s} >Manage Food</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.water_content}>
-                    <Text style={styles.text_label}>Water Storage</Text>
-                        <View style={styles.food_content_box}>
-                            <Image source={require('../assets/Images/water-dispenser.png')} style={styles.water_img} />
-                            <Text>{waterCapacity} %</Text>
-                            <Text style={styles.font_s_gray} >Capacity</Text>
+
+                    {   
+                        waterCapacity <= 10 ? 
+
+                        <View style={[styles.water_content, styles.border_danger]}>
+                            <Text style={[styles.text_label, styles.text_danger]}>Water Storage</Text>
+                            <View style={styles.food_content_box}>
+                                <Image source={require('../assets/Images/water-dispenser.png')} style={styles.water_img} />
+                                <Text style={styles.text_danger}>{waterCapacity} %</Text>
+                                <Text style={[styles.font_s_gray, styles.text_danger]} >Capacity</Text>
+                            </View>
                         </View>
-                    </View>
+                        : 
+                        <View style={styles.water_content}>
+                            <Text style={styles.text_label}>Water Storage</Text>
+                            <View style={styles.food_content_box}>
+                                <Image source={require('../assets/Images/water-dispenser.png')} style={styles.water_img} />
+                                <Text>{waterCapacity} %</Text>
+                                <Text style={styles.font_s_gray} >Capacity</Text>
+                            </View>
+                        </View>
+
+                    }
+                    
+                    
                 </View>
                 <TouchableOpacity style={styles.light_control}>
                     <Image source={require('../assets/Images/light-bulb.png')} style={styles.env_img} />
@@ -106,6 +123,14 @@ export default function DashboardScreen() {
 }
 
 const styles = StyleSheet.create({
+
+    border_danger : {
+        borderColor : '#d74338'
+    },
+
+    text_danger : {
+        color : '#d74338'
+    },
 
     light_control : {
         alignSelf : 'center',
