@@ -13,6 +13,10 @@ export default function DashboardScreen() {
 
     const [waterCapacity, setwaterCapacity] = useState(0);
 
+    const [Temperature, setTemperature] = useState(0);
+
+    const [Humidity, setHumidity] = useState(0);
+
     const fetchFoodWeight = async ()=>{
         try {
             const response = await axios.get("http://192.168.1.24:8080/api/food/weight")
@@ -23,6 +27,20 @@ export default function DashboardScreen() {
             console.log('Unable to Connect:[Web Server API]')
         }
     }
+
+
+     const tempHumid = async ()=>{
+        try {
+            const response = await axios.get("http://192.168.1.24:8080/api/tempHumid")
+            setTemperature(response.data.temperature)
+            setHumidity(response.data.humidity)
+            console.log(response.data)
+        } catch (error) {
+            console.error(error)
+            console.log('Unable to Connect:[Web Server API]')
+        }
+    }
+
 
 
     const fetchWaterCapacity = async ()=>{
@@ -43,9 +61,12 @@ export default function DashboardScreen() {
 
     const realTime_waterCapacity = setInterval(fetchWaterCapacity, 1000)
 
+    const realTime_tempHumid = setInterval(tempHumid, 1000)
+
     return ()=> {
         clearInterval(realTime_foodWeight)
         clearInterval(realTime_waterCapacity)
+        clearImmediate(realTime_tempHumid)
     }        
     }, []);
 
@@ -63,12 +84,12 @@ export default function DashboardScreen() {
                     <View style={styles.environment_content_box}>
                         <View style={styles.environment_box}>
                             <Image source={require('../assets/Images/thermometer.png')} style={styles.env_img} />
-                            <Text style={styles.f_big}>0 °C</Text>
+                            <Text style={styles.f_big}> { Temperature } °C</Text>
                             <Text style={styles.font_s_gray} >Temperature</Text>
                         </View>
                         <View style={styles.environment_box}>
                             <Image source={require('../assets/Images/humidity.png')} style={styles.env_img} />
-                            <Text style={styles.f_big}>0 %</Text>
+                            <Text style={styles.f_big}> { Humidity } %</Text>
                             <Text style={styles.font_s_gray} >Humidity</Text>
                         </View>
                     </View>
