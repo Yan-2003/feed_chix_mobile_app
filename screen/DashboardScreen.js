@@ -19,7 +19,7 @@ export default function DashboardScreen() {
 
     const fetchFoodWeight = async ()=>{
         try {
-            const response = await axios.get("http://192.168.1.24:8080/api/food/weight")
+            const response = await axios.get("http://192.168.1.88:8080/api/food/weight")
             setfoodWeight(response.data.weight)
             console.log(response.data)
         } catch (error) {
@@ -31,7 +31,7 @@ export default function DashboardScreen() {
 
      const tempHumid = async ()=>{
         try {
-            const response = await axios.get("http://192.168.1.24:8080/api/tempHumid")
+            const response = await axios.get("http://192.168.1.88:8080/api/tempHumid")
             setTemperature(response.data.temperature)
             setHumidity(response.data.humidity)
             console.log(response.data)
@@ -45,7 +45,7 @@ export default function DashboardScreen() {
 
     const fetchWaterCapacity = async ()=>{
         try {
-            const response = await axios.get("http://192.168.1.24:8080/api/water/capacity")
+            const response = await axios.get("http://192.168.1.88:8080/api/water/capacity")
             setwaterCapacity(response.data.capacity)
             console.log(response.data)
         } catch (error) {
