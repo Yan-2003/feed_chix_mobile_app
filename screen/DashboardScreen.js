@@ -7,7 +7,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
-export default function DashboardScreen() {
+export default function DashboardScreen({ navigation }) {
+
+    const [LightStatus, setLightStatus] = useState('OFF');
 
     const [foodWeight, setfoodWeight] = useState(0);
 
@@ -54,14 +56,27 @@ export default function DashboardScreen() {
         }
     }
 
+    const getLightStatus = async () =>{
+        try {
+          const response = await axios.get("http://192.168.1.88:8080/api/light/status")
+          setLightStatus(response.data.light_status)
+          console.log(response.data)
+        } catch (error) {
+          console.error(error)
+          console.log('Unable to Connect:[Web Server API]')
+        }
+      }
+
 
 
     useEffect(() => {
-    const realTime_foodWeight = setInterval(fetchFoodWeight, 1000)
+        const realTime_foodWeight = setInterval(fetchFoodWeight, 1000)
 
-    const realTime_waterCapacity = setInterval(fetchWaterCapacity, 1000)
+        const realTime_waterCapacity = setInterval(fetchWaterCapacity, 1000)
 
-    const realTime_tempHumid = setInterval(tempHumid, 1000)
+        const realTime_tempHumid = setInterval(tempHumid, 1000)
+
+        const realTime_lightStatus = setInterval(getLightStatus, 1000);
 
     return ()=> {
         clearInterval(realTime_foodWeight)
@@ -128,15 +143,22 @@ export default function DashboardScreen() {
                                 <Text>{waterCapacity} %</Text>
                                 <Text style={styles.font_s_gray} >Capacity</Text>
                             </View>
+
+
                         </View>
 
                     }
                     
                     
                 </View>
-                <TouchableOpacity style={styles.light_control}>
-                    <Image source={require('../assets/Images/light-bulb.png')} style={styles.env_img} />
-                    <Text style={styles.f_gray}>Light Control</Text>
+                <TouchableOpacity style={styles.light_control} onPress={()=> navigation.navigate("LightControl")}>
+                    <View style={styles.light_logo}>
+                        <Image source={require('../assets/Images/light-bulb.png')} style={styles.env_img} />
+                        <Text style={styles.f_gray}>Light Control</Text>
+                    </View>
+                    <View style={[styles.light_status_icon, (LightStatus == "ON") ? styles.lightOn : styles.lightOff ]}>
+                        <Text>{ LightStatus }</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -144,6 +166,31 @@ export default function DashboardScreen() {
 }
 
 const styles = StyleSheet.create({
+
+    lightOn : {
+        backgroundColor : '#7BFF6F',
+    },
+
+    lightOff : {
+        backgroundColor : '#FD6E67',
+    },
+
+    light_status_icon : {
+        width : 50,
+        height : 50,
+        alignItems : 'center',
+        justifyContent : 'center',
+        padding : 10,
+        borderRadius : 100,
+        borderWidth : 1,
+        borderColor : '#474747',
+    },
+
+    light_logo : {
+        flexDirection : 'row',
+        alignItems : 'center',
+        gap : 5,
+    },
 
     border_danger : {
         borderColor : '#d74338'
@@ -164,6 +211,7 @@ const styles = StyleSheet.create({
         flex : 0,
         flexDirection : 'row',
         alignItems : 'center',
+        justifyContent : 'space-between',
         paddingLeft : 20,
         paddingRight : 20,
     },
