@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import {API_URL} from "@env"
 
 
 export default function DashboardScreen({ navigation }) {
@@ -19,9 +19,11 @@ export default function DashboardScreen({ navigation }) {
 
     const [Humidity, setHumidity] = useState(0);
 
+    console.log("API URL: ", API_URL)
+
     const fetchFoodWeight = async ()=>{
         try {
-            const response = await axios.get("http://192.168.1.88:8080/api/food/weight")
+            const response = await axios.get( API_URL + "/food/weight")
             setfoodWeight(response.data.weight)
             console.log(response.data)
         } catch (error) {
@@ -33,7 +35,7 @@ export default function DashboardScreen({ navigation }) {
 
      const tempHumid = async ()=>{
         try {
-            const response = await axios.get("http://192.168.1.88:8080/api/tempHumid")
+            const response = await axios.get( API_URL + "/tempHumid")
             setTemperature(response.data.temperature)
             setHumidity(response.data.humidity)
             console.log(response.data)
@@ -47,7 +49,7 @@ export default function DashboardScreen({ navigation }) {
 
     const fetchWaterCapacity = async ()=>{
         try {
-            const response = await axios.get("http://192.168.1.88:8080/api/water/capacity")
+            const response = await axios.get( API_URL + "/water/capacity")
             setwaterCapacity(response.data.capacity)
             console.log(response.data)
         } catch (error) {
@@ -58,7 +60,7 @@ export default function DashboardScreen({ navigation }) {
 
     const getLightStatus = async () =>{
         try {
-          const response = await axios.get("http://192.168.1.88:8080/api/light/status")
+          const response = await axios.get( API_URL + "/light/status")
           setLightStatus(response.data.light_status)
           console.log(response.data)
         } catch (error) {
@@ -70,11 +72,18 @@ export default function DashboardScreen({ navigation }) {
 
 
     useEffect(() => {
-        const realTime_foodWeight = setInterval(fetchFoodWeight, 1000)
 
-        const realTime_waterCapacity = setInterval(fetchWaterCapacity, 1000)
+        fetchFoodWeight()
+        fetchWaterCapacity()
+        getLightStatus()
+        tempHumid()
 
-        const realTime_tempHumid = setInterval(tempHumid, 1000)
+
+        const realTime_foodWeight = setInterval(fetchFoodWeight, 10000)
+
+        const realTime_waterCapacity = setInterval(fetchWaterCapacity, 10000)
+
+        const realTime_tempHumid = setInterval(tempHumid, 10000)
 
         const realTime_lightStatus = setInterval(getLightStatus, 1000);
 
@@ -82,6 +91,7 @@ export default function DashboardScreen({ navigation }) {
         clearInterval(realTime_foodWeight)
         clearInterval(realTime_waterCapacity)
         clearImmediate(realTime_tempHumid)
+        clearImmediate(realTime_lightStatus)
     }        
     }, []);
 
@@ -90,11 +100,16 @@ export default function DashboardScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
-                <View style={styles.logo_contaier}>
-                    <Image source={require('../assets/Images/logo.png')} style={styles.logo} />
-                    <Text>C-Coop</Text>
+                <View style={styles.header}>
+                    <View style={styles.logo_contaier}>
+                        <Image source={require('../assets/Images/logo.png')} style={styles.logo} />
+                        <Text>C-Coop</Text>
+                    </View>
+                    <TouchableOpacity onPress={()=> navigation.navigate('Notification')}>
+                        <Image style={styles.logo} source={require('../assets/Images/bell.png')} />
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.environtment_content}>
+                <TouchableOpacity style={styles.environtment_content} onPress={()=> navigation.navigate("TempHumid")}>
                     <Text style={styles.text_label_light}>Environment</Text>
                     <View style={styles.environment_content_box}>
                         <View style={styles.environment_box}>
@@ -108,6 +123,7 @@ export default function DashboardScreen({ navigation }) {
                             <Text style={styles.font_s_gray} >Humidity</Text>
                         </View>
                     </View>
+                    <Text style={styles.text_light}>Age: (Week 4) </Text>
                 </TouchableOpacity>
                 <View style={styles.food_water_container}>
                     <View>
@@ -166,6 +182,18 @@ export default function DashboardScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+
+    text_light : {
+        color : 'white'
+    },  
+
+
+    header : {
+        flexDirection : 'row',
+        justifyContent : 'space-between',
+        width : "95%",
+        alignSelf : "center"
+    },
 
     lightOn : {
         backgroundColor : '#7BFF6F',
