@@ -6,6 +6,7 @@ import axios from 'axios';
 import Loading from '../components/Loading'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import {API_URL} from "@env"
+import styles from '../styles/styles';
 
 export default function LightScreen( { navigation }) {
 
@@ -127,7 +128,7 @@ export default function LightScreen( { navigation }) {
 
   useEffect(() => {
     getSchedule()
-    const realTime_lightStatus = setInterval(getLightStatus , 10000)
+    const realTime_lightStatus = setInterval(getLightStatus , 2000)
 
     return () =>{
       clearImmediate(realTime_lightStatus)
@@ -200,65 +201,3 @@ export default function LightScreen( { navigation }) {
 }
 
 
-const styles = StyleSheet.create({
-
-    safeArea: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-
-    submit_btn : {
-      marginTop : 5,
-      width : 180,
-      height : 35,
-      borderColor : '#474747',
-      borderWidth : 1,
-      borderRadius : 50,
-      justifyContent : 'center',
-      alignItems : 'center',
-      backgroundColor : '#EBEBEB',
-    },
-
-    time_schedule: {
-      flex : 0,
-      flexDirection : 'row',
-      gap : 10, 
-      alignItems : 'center',
-      marginTop : 10,
-      marginBottom : 10,
-    },
-
-    backicon : {
-        width : 20,
-        height : 20
-    },
-
-    backBtn : {
-      flex : 0,
-      flexDirection : 'row',
-      alignItems : 'center'
-    },
-
-    header : {
-      flex : 0,
-      width : '98%',
-      alignSelf : 'center'
-    }, 
-
-    lighticon : {
-      width : 200,
-      height : 200,
-    },
-
-    body : {
-      flex : 1,
-      alignItems : 'center',
-    },
-
-    lightSwitch: {
-      flex : 0,
-      alignItems : 'center',
-      gap: 10,
-    }
-  
-})
