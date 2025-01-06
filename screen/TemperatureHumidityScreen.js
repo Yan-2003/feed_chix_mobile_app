@@ -54,6 +54,7 @@ export default function TemperatureHumidityScreen({navigation}) {
   const getCHickenInfo  = async ()=>{
     try {
       const response = await axios.get( API_URL + "/chicken")
+      console.log("chicken_info: ")
       console.log(response.data)
       setAge(response.data.week_age)
       settimeat(response.data.time_stamp)
@@ -112,7 +113,7 @@ export default function TemperatureHumidityScreen({navigation}) {
                   <Text>Set The Chicken Age in Weeks this will automatically adjusted every week.</Text>
                   <View style={styles.age_input_content}>
                       <Text>Chicken Age in Weeks : </Text>
-                      <TextInput keyboardType='numeric' style={styles.age_input} value={Age.toString()} onChangeText={num => setAge(num)}/>
+                      <TextInput keyboardType='numeric' style={styles.age_input} value={Age} onChangeText={num => setAge(num)}/>
                   </View>
                   <View style={styles.age_input_content}>
                     <Text>Started At: {GetStartedAt(timeat)}</Text>

@@ -20,6 +20,9 @@ export default function DashboardScreen({ navigation }) {
 
     const [Humidity, setHumidity] = useState(0);
 
+    const [Age, setAge] = useState(0);
+
+
     console.log("API URL: ", API_URL)
 
     const fetchFoodWeight = async ()=>{
@@ -71,6 +74,20 @@ export default function DashboardScreen({ navigation }) {
       }
 
 
+      const getCHickenInfo  = async ()=>{
+        try {
+          const response = await axios.get( API_URL + "/chicken")
+          console.log("chicken_info: ")
+          console.log(response.data)
+          setAge(response.data.week_age)
+
+        } catch (error) {
+          console.error(error)
+          console.log('Unable to Connect:[Web Server API]')
+        }
+      }
+
+
 
     useEffect(() => {
 
@@ -78,15 +95,16 @@ export default function DashboardScreen({ navigation }) {
         fetchWaterCapacity()
         getLightStatus()
         tempHumid()
+        getCHickenInfo()
 
 
-        const realTime_foodWeight = setInterval(fetchFoodWeight, 10000)
+        const realTime_foodWeight = setInterval(fetchFoodWeight, 2000)
 
-        const realTime_waterCapacity = setInterval(fetchWaterCapacity, 10000)
+        const realTime_waterCapacity = setInterval(fetchWaterCapacity, 2000)
 
-        const realTime_tempHumid = setInterval(tempHumid, 10000)
+        const realTime_tempHumid = setInterval(tempHumid, 2000)
 
-        const realTime_lightStatus = setInterval(getLightStatus, 1000);
+        const realTime_lightStatus = setInterval(getLightStatus, 2000);
 
     return ()=> {
         clearInterval(realTime_foodWeight)
@@ -124,7 +142,7 @@ export default function DashboardScreen({ navigation }) {
                             <Text style={styles.font_s_gray} >Humidity</Text>
                         </View>
                     </View>
-                    <Text style={styles.text_light}>Age: (Week 4) </Text>
+                    <Text style={styles.text_light}>Age: (Week {Age}) </Text>
                 </TouchableOpacity>
                 <View style={styles.food_water_container}>
                     <View>
