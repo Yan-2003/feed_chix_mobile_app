@@ -15,11 +15,13 @@ export default function TemperatureHumidityScreen({navigation}) {
 
   const [timeat, settimeat] = useState(null);
 
+  const [chickenNum, setchickenNum] = useState(0);
+
   const update_Age = async ()=>{
     Keyboard.dismiss
 
     try {
-      const response = await axios.post( API_URL + "/chicken/set_chicken", {week_age : Age})
+      const response = await axios.post( API_URL + "/chicken/set_chicken", {week_age : Age, chicken_num : chickenNum})
       console.log(response.data)
     } catch (error) {
       console.error(error)
@@ -58,6 +60,7 @@ export default function TemperatureHumidityScreen({navigation}) {
       console.log(response.data)
       setAge(response.data.week_age)
       settimeat(response.data.time_stamp)
+      setchickenNum(response.data.chicken_num)
 
     } catch (error) {
       console.error(error)
@@ -114,6 +117,10 @@ export default function TemperatureHumidityScreen({navigation}) {
                   <View style={styles.age_input_content}>
                       <Text>Chicken Age in Weeks : </Text>
                       <TextInput keyboardType='numeric' style={styles.age_input} value={Age} onChangeText={num => setAge(num)}/>
+                  </View>
+                  <View style={styles.age_input_content}>
+                      <Text>Number of Chickens : </Text>
+                      <TextInput keyboardType='numeric' style={styles.age_input} value={chickenNum} onChangeText={num => setchickenNum(num)}/>
                   </View>
                   <View style={styles.age_input_content}>
                     <Text>Started At: {GetStartedAt(timeat)}</Text>

@@ -256,7 +256,8 @@ const styles = StyleSheet.create({
     age_input_content : { 
         flexDirection : 'row',
         justifyContent : 'center',
-        alignItems : 'center'
+        alignItems : 'center',
+        marginTop : 2,
     }  ,
     age_input : {
         backgroundColor : "black",
