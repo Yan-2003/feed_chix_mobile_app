@@ -128,7 +128,7 @@ export default function LightScreen( { navigation }) {
 
   useEffect(() => {
     getSchedule()
-    const realTime_lightStatus = setInterval(getLightStatus , 2000)
+    const realTime_lightStatus = setInterval(getLightStatus , 1000)
 
     return () =>{
       clearImmediate(realTime_lightStatus)

@@ -234,19 +234,20 @@ const styles = StyleSheet.create({
     },
   
     backBtn : {
-    flex : 0,
-    flexDirection : 'row',
-    alignItems : 'center'
+        flex : 0,
+        flexDirection : 'row',
+        alignItems : 'center'
     },
 
     lighticon : {
-    width : 200,
-    height : 200,
+        width : 200,
+        height : 200,
     },
 
     body : {
-    flex : 1,
-    alignItems : 'center',
+        flex : 1,
+        alignItems : 'center',
+        justifyContent : 'center'
     },
 
     setweekage_content : { 
