@@ -5,13 +5,14 @@ import DashboardScreen from './screen/DashboardScreen';
 import LightScreen from './screen/LightScreen';
 import NotifcationScreen from './screen/NatificationScreen'
 import TemperatureHumidityScreen from './screen/TemperatureHumidityScreen';
-
+import registerNNPushToken from 'native-notify';
 const Stack = createNativeStackNavigator();
 
 
 
 export default function App() {
 
+  registerNNPushToken(26755, 'UtZgk2d9XwWKObtyW9dA3d');
 
 
   return (

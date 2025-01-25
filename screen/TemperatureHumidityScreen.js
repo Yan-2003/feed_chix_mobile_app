@@ -33,11 +33,11 @@ export default function TemperatureHumidityScreen({navigation}) {
   }
 
   const GetStartedAt = (timestamp) => {
-    const date = new Date(timestamp); // Convert timestamp to Date object
+    const date = new Date(timestamp); 
     return date.toLocaleDateString('en-US', {
-      month: 'short', // Abbreviated month (e.g., Dec)
-      day: 'numeric', // Day of the month (e.g., 21)
-      year: 'numeric', // Full year (e.g., 2024)
+      month: 'short', 
+      day: 'numeric', 
+      year: 'numeric', 
     });
   }
 
