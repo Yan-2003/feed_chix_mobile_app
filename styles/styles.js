@@ -279,8 +279,29 @@ const styles = StyleSheet.create({
         alignItems : "center",
         borderRadius : "5%",
         margin : 10,
-    } 
+    }, 
 
+    notification_box : {
+        width : '100%',
+        alignContent : 'center',
+    },
+
+    notification_message : {
+        width : '95%',
+        height : 80,
+        backgroundColor : '#EBEBEB',
+        alignSelf : 'center',
+        borderRadius : 15,
+        marginTop : 5,
+        borderWidth : 1,
+        padding : 10,
+        justifyContent : 'center'
+    },
+
+    notification_massage_text: {
+        fontSize : 20,
+        marginLeft : 10,
+    },
 
 });
 
