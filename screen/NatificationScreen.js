@@ -21,7 +21,7 @@ export default function NatificationScreen({navigation}) {
 
     const notification_log = JSON.parse(response.data)
 
-    setnotification(notification_log)
+    //setnotification(notification_log)
 
     setIsLoading(false)
     
