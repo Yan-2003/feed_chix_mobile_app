@@ -12,7 +12,7 @@ export default function NatificationScreen({navigation}) {
 
   useEffect( async () => {
 
-    const response = await axios.get('/notification_log')
+    const response = await axios.get(API_URL + '/notification_log')
 
     setnotification(response.data.toString())
     
