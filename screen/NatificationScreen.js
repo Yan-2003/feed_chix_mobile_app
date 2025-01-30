@@ -19,15 +19,9 @@ export default function NatificationScreen({navigation}) {
 
     const response = await axios.get(API_URL + '/notification_log')
 
-    const notification_log = response.data
+    const notification_log = JSON.parse(response.data)
 
-    const notificationArray = Object.keys(notification_log).map(key =>({
-      id : key,
-      ...notification_log[key]
-    }))
-
-
-    setnotification(notificationArray)
+    setnotification(notification_log)
 
     setIsLoading(false)
     
