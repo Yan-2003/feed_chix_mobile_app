@@ -37,7 +37,7 @@ export default function NatificationScreen({navigation}) {
        </View>
       <ScrollView style={styles.notification_box}>
 
-        {
+       {/*  {
           IsLoading ? <Loading/>
 
           : notification.forEach(notif => {
@@ -47,7 +47,7 @@ export default function NatificationScreen({navigation}) {
               </View>
             })
 
-        }
+        } */}
 
       </ScrollView> 
     </SafeAreaView>
