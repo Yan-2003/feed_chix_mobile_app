@@ -6,6 +6,7 @@ import LightScreen from './screen/LightScreen';
 import NotifcationScreen from './screen/NatificationScreen'
 import TemperatureHumidityScreen from './screen/TemperatureHumidityScreen';
 import registerNNPushToken from 'native-notify';
+import MangeFoodScreen from './screen/MangeFoodScreen';
 const Stack = createNativeStackNavigator();
 
 
@@ -22,6 +23,7 @@ export default function App() {
         <Stack.Screen name='Notification' component={ NotifcationScreen} />
         <Stack.Screen name='LightControl' component={ LightScreen }/>
         <Stack.Screen name='TempHumid' component={ TemperatureHumidityScreen } />
+        <Stack.Screen name='MangeFood' component={ MangeFoodScreen } />
       </Stack.Navigator>
     </NavigationContainer>
   );

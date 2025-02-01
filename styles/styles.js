@@ -301,6 +301,23 @@ const styles = StyleSheet.create({
     notification_massage_text: {
         fontSize : 20,
         marginLeft : 10,
+        marginTop : 10,
+    },
+
+    text_l : {
+        fontSize : 15,
+        fontWeight : 'bold'
+    },
+
+    text_note : {
+        width : '80%',
+        marginTop : 20,
+        fontSize : 12,
+        textAlign : 'justify'
+    },
+
+    scroll : {
+        flex : 1,
     },
 
 });

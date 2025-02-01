@@ -154,7 +154,7 @@ export default function DashboardScreen({ navigation }) {
                                 <Text style={styles.font_s_gray} >Weight Load</Text>
                             </View>
                         </View>
-                        <TouchableOpacity style={styles.manage_btn}>
+                        <TouchableOpacity style={styles.manage_btn} onPress={()=> navigation.navigate("MangeFood")}>
                             <Text style={styles.font_s} >Manage Food</Text>
                         </TouchableOpacity>
                     </View>
