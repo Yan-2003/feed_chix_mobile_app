@@ -320,6 +320,58 @@ const styles = StyleSheet.create({
         flex : 1,
     },
 
+    add_feeding_sched_bnt : {
+        alignSelf : 'center',
+        padding : 20,
+        backgroundColor : '#47626D',
+        borderRadius : 15,
+    },
+
+    modal : {
+        flex : 1,
+        position : 'absolute',
+        alignItems :'center',
+        justifyContent : 'center',
+        width : '100%',
+        height : '100%',
+        zIndex : 10,
+    },
+
+    modal_main : {
+        width : '80%',
+        height : '50%',
+        backgroundColor : '#EBEBEB',
+        padding : 10,
+        borderRadius : 10,
+        borderWidth : 1,
+        justifyContent : 'space-between'
+    }, 
+    
+    add_bnt : {
+        width : '50%',
+        alignItems : 'center',
+        padding : 20,
+        backgroundColor : '#47626D',
+        borderRadius : 15,
+    },
+
+    cancel_bnt : {
+        width : '50%',
+        alignItems : 'center',
+        padding : 20,  
+        backgroundColor : 'white',
+        borderWidth : 1,
+        borderRadius : 15,
+    },
+
+    modal_button_section : {
+        width : '100%',
+        flexDirection : 'row',
+        justifyContent :'center',
+        alignItems :'center',
+        gap : 10,
+    },  
+
 });
 
 
