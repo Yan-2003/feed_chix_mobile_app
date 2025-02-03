@@ -1,7 +1,9 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import styles from '../styles/styles'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import axios from 'axios';
+import {API_URL} from "@env"
 
 
 export default function FeedingSchedulerModal({open, close}) {
@@ -15,6 +17,31 @@ export default function FeedingSchedulerModal({open, close}) {
         const currentDate = selectedDate || feedingSchedule;
         setfeedingSchedule(currentDate);
     };
+
+
+    const add_schedule = async () =>{
+
+
+        console.log('scheduling time : ', feedingSchedule)
+
+        try {
+            const response  = await axios.post( API_URL + '/food/add_schedule',  {feeding_sched : feedingSchedule})
+            
+            if(response){
+                console.log(response.data)
+                Alert.alert('Succesfully Added Schedule')
+                return close(false)
+            }
+            
+        } catch (error) {
+            console.log(error)
+            Alert.alert('Unable to Add Schedule')
+        }
+
+        
+
+
+    }
 
   return (
     <>
@@ -36,7 +63,7 @@ export default function FeedingSchedulerModal({open, close}) {
                         </View>
                         <View style={styles.modal_button_section}>
                             <TouchableOpacity onPress={()=>close(false)} style={styles.cancel_bnt}><Text>Cancel</Text></TouchableOpacity>
-                            <TouchableOpacity style={styles.add_bnt}><Text style={styles.text_light}>Add</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={()=>add_schedule()} style={styles.add_bnt}><Text style={styles.text_light}>Add</Text></TouchableOpacity>
                         </View>
                     </View>
                 </View>

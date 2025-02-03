@@ -12,6 +12,8 @@ export default function MangeFoodScreen({navigation}){
 
     const [isOpenModal, setisOpenModal] = useState(false);
 
+    const [feedingScheduleList, setfeedingScheduleList] = useState([]);
+
     const foodWeight = 0;
 
     const getCHickenInfo  = async ()=>{
@@ -27,18 +29,24 @@ export default function MangeFoodScreen({navigation}){
     }
 
 
+    const get_schedules = async () =>{
+        try {
+            
+            const response = await axios.get(API_URL + "/food/get_schedules")
+            console.log(response.data)
+
+            setfeedingScheduleList(response.data)
 
 
-
-
-
-
-
-
-
+        } catch (error) {   
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
-        getCHickenInfo()  
+        getCHickenInfo() 
+        
+        get_schedules()
 
     }, []);
 
@@ -52,16 +60,21 @@ export default function MangeFoodScreen({navigation}){
                 <Text>Back</Text>
             </TouchableOpacity>
        </View>
-       <ScrollView style={styles.scroll}>
-            <View style={styles.body}>
-                <View style={styles.food_content_box}>
-                    <Image source={require('../assets/Images/chicken-rice.png')} style={styles.food_img} />
-                    <Text style={styles.text_l}> { (foodWeight / 1000 ).toFixed(1)} Kg /  <Text style={styles.text_l} > { foodWeight } gm</Text></Text>
-                    <Text >Weight Load</Text>
-                </View>
-                <Text style={styles.text_note}>Food will automatically adjusted base on the week age of the chicken and will be devided by {chickenNum} chicken you can update this configuration {"<Enviroment>"} </Text>
+        <View style={styles.body}>
+            <View style={styles.food_content_box}>
+                <Image source={require('../assets/Images/chicken-rice.png')} style={styles.food_img} />
+                <Text style={styles.text_l}> { (foodWeight / 1000 ).toFixed(1)} Kg /  <Text style={styles.text_l} > { foodWeight } gm</Text></Text>
+                <Text >Weight Load</Text>
             </View>
-       </ScrollView>
+            <Text style={styles.text_note}>Food will automatically adjusted base on the week age of the chicken and will be devided by {chickenNum} chicken you can update this configuration {"<Enviroment>"} </Text>
+        </View>
+        <ScrollView>
+            {
+                feedingScheduleList.map(item =>{
+                    return <Text key={item.id}>Time: {item.timestamp}</Text>
+                })
+            }
+        </ScrollView>
        <TouchableOpacity onPress={()=> setisOpenModal(true) } style={styles.add_feeding_sched_bnt} ><Text style={styles.text_light}>Add Feeding Schedule</Text></TouchableOpacity>
       </SafeAreaView>
     )
