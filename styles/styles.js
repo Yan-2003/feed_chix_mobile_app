@@ -372,6 +372,33 @@ const styles = StyleSheet.create({
         gap : 10,
     },  
 
+    schedule_feeding_main : {
+        width : '90%',
+        alignSelf : 'center',
+        flexDirection : 'row',
+        padding : 20,
+        backgroundColor : '#EBEBEB',
+        marginTop : 10,
+        justifyContent : 'space-between', 
+        borderRadius : 15,
+        alignItems : 'center'
+
+    },
+
+    delete_btn : {
+
+    },
+
+    time_text : {
+        fontSize : 20,
+        fontWeight : 'bold'
+    },
+
+    icon :{
+        width : 40,
+        height : 40
+    },
+
 });
 
 

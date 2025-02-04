@@ -43,6 +43,39 @@ export default function MangeFoodScreen({navigation}){
         }
     }
 
+
+    const getFormatTime = (stringDate) => {
+        const date = new Date(stringDate)
+    
+        const hours  = date.getHours() > 12 ? date.getHours() - 12 : date.getHours()
+    
+        const hoursFormat = date.getHours() > 11 && date.getHours != 24 ? "pm" : "am"
+
+        const minutes = date.getMinutes() <  10 ? '0' + date.getMinutes() : date.getMinutes() 
+    
+        return hours + ":" + minutes + " " + hoursFormat
+    
+      }
+
+
+    const delete_schedule = async (id) =>{
+
+        console.log(id)
+
+        try {
+                const response = await axios.delete(API_URL + `/delete_schedule/schedules/${id}`)
+            
+                if(response){
+                    console.log(response.data)
+                    return Alert.alert('Item Deleted Successfully.')
+                }
+        } catch (error) {
+            console.log(error)
+            return Alert.alert('Item Failed to Delete.')
+        }
+
+    }
+
     useEffect(() => {
         getCHickenInfo() 
         
@@ -71,7 +104,12 @@ export default function MangeFoodScreen({navigation}){
         <ScrollView>
             {
                 feedingScheduleList.map(item =>{
-                    return <Text key={item.id}>Time: {item.timestamp}</Text>
+                    return (
+                        <View key={item.id} style={styles.schedule_feeding_main}>
+                            <Text style={styles.time_text}>Time: {getFormatTime(item.timestamp)}</Text>
+                            <TouchableOpacity onPress={()=>delete_schedule(item.id)} style={styles.delete_btn}><Image style={styles.icon} source={require('../assets/Images/delete.png')} /></TouchableOpacity>
+                        </View>
+                    )
                 })
             }
         </ScrollView>
