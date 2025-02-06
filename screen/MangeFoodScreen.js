@@ -63,7 +63,7 @@ export default function MangeFoodScreen({navigation}){
         console.log(id)
 
         try {
-                const response = await axios.delete(API_URL + `/delete_schedule/schedules/${id}`)
+                const response = await axios.delete(API_URL + `/food/delete_schedule/schedules/${id}`)
             
                 if(response){
                     console.log(response.data)
