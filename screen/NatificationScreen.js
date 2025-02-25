@@ -55,7 +55,7 @@ export default function NatificationScreen({navigation}) {
        </View>
       <ScrollView style={styles.notification_box}>
         {
-          IsLoading ? <Loading/>
+          IsLoading == true ? <Loading/>
           
           : notification.map((notif, index) => {
             return (

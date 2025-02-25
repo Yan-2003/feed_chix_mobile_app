@@ -14,7 +14,11 @@ export default function MangeFoodScreen({navigation}){
 
     const [feedingScheduleList, setfeedingScheduleList] = useState([]);
 
+    const [feedingSchedule, setfeedingSchedule] = useState(new Date());
+
     const foodWeight = 0;
+
+    const [isLoading, setisLoading] = useState(false);
 
     const getCHickenInfo  = async ()=>{
         try {
@@ -30,17 +34,21 @@ export default function MangeFoodScreen({navigation}){
 
 
     const get_schedules = async () =>{
+
+        setisLoading(true)
+        setfeedingScheduleList([])
+
         try {
             
             const response = await axios.get(API_URL + "/food/get_schedules")
             console.log(response.data)
-
             setfeedingScheduleList(response.data)
-
-
+            console.log(feedingScheduleList)
+            
         } catch (error) {   
             console.log(error)
         }
+        setisLoading(false)
     }
 
 
@@ -55,10 +63,36 @@ export default function MangeFoodScreen({navigation}){
     
         return hours + ":" + minutes + " " + hoursFormat
     
-      }
+    }
+
+
+    const add_schedule = async () =>{
+
+        setisLoading(true)
+
+        console.log('scheduling time : ', feedingSchedule)
+
+        try {
+            const response  = await axios.post( API_URL + '/food/add_schedule',  {feeding_sched : feedingSchedule})
+            
+            if(response){
+                console.log(response.data)
+                Alert.alert('Succesfully Added Schedule')
+                return close(false)
+            }
+            
+        } catch (error) {
+            console.log(error)
+            Alert.alert('Unable to Add Schedule')
+        }
+        get_schedules()
+        setisLoading(false)
+    }
 
 
     const delete_schedule = async (id) =>{
+
+        setisLoading(true)
 
         console.log(id)
 
@@ -73,7 +107,8 @@ export default function MangeFoodScreen({navigation}){
             console.log(error)
             return Alert.alert('Item Failed to Delete.')
         }
-
+        get_schedules()
+        setisLoading(false)
     }
 
     useEffect(() => {
@@ -86,7 +121,7 @@ export default function MangeFoodScreen({navigation}){
 
     return (
       <SafeAreaView style={styles.safeArea}>
-        <FeedingSchedulerModal open={isOpenModal} close={setisOpenModal} />
+        <FeedingSchedulerModal open={isOpenModal} close={setisOpenModal} setfeedingSchedule={setfeedingSchedule} feedingSchedule={feedingSchedule} add_schedule={add_schedule}  />
         <View style={styles.header}>
             <TouchableOpacity style={styles.backBtn} onPress={()=> navigation.navigate('Dashboard')}>
                 <Image style={styles.backicon} source={require('../assets/Images/back.png')} />
@@ -103,14 +138,19 @@ export default function MangeFoodScreen({navigation}){
         </View>
         <ScrollView>
             {
-                feedingScheduleList.map(item =>{
-                    return (
-                        <View key={item.id} style={styles.schedule_feeding_main}>
-                            <Text style={styles.time_text}>Time: {getFormatTime(item.timestamp)}</Text>
-                            <TouchableOpacity onPress={()=>delete_schedule(item.id)} style={styles.delete_btn}><Image style={styles.icon} source={require('../assets/Images/delete.png')} /></TouchableOpacity>
-                        </View>
-                    )
-                })
+                isLoading == true ?  <View style={styles.body}><Text>Loading...</Text></View> 
+
+                : feedingScheduleList.length > 0 ?
+                    feedingScheduleList.map(item =>{
+                        return (
+                            <View key={item.id} style={styles.schedule_feeding_main}>
+                                <Text style={styles.time_text}>Time: {getFormatTime(item.timestamp)}</Text>
+                                <TouchableOpacity onPress={()=>delete_schedule(item.id)} style={styles.delete_btn}><Image style={styles.icon} source={require('../assets/Images/delete.png')} /></TouchableOpacity>
+                            </View>
+                        )
+                    })
+
+                    : <View style={styles.body}><Text>No Schedule. 🥺</Text></View> 
             }
         </ScrollView>
        <TouchableOpacity onPress={()=> setisOpenModal(true) } style={styles.add_feeding_sched_bnt} ><Text style={styles.text_light}>Add Feeding Schedule</Text></TouchableOpacity>

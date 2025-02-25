@@ -6,9 +6,7 @@ import axios from 'axios';
 import {API_URL} from "@env"
 
 
-export default function FeedingSchedulerModal({open, close}) {
-
-    const [feedingSchedule, setfeedingSchedule] = useState(new Date());
+export default function FeedingSchedulerModal({open, close, setfeedingSchedule, feedingSchedule, add_schedule}) {
 
     const [mode, setMode] = useState('time');
 
@@ -18,30 +16,6 @@ export default function FeedingSchedulerModal({open, close}) {
         setfeedingSchedule(currentDate);
     };
 
-
-    const add_schedule = async () =>{
-
-
-        console.log('scheduling time : ', feedingSchedule)
-
-        try {
-            const response  = await axios.post( API_URL + '/food/add_schedule',  {feeding_sched : feedingSchedule})
-            
-            if(response){
-                console.log(response.data)
-                Alert.alert('Succesfully Added Schedule')
-                return close(false)
-            }
-            
-        } catch (error) {
-            console.log(error)
-            Alert.alert('Unable to Add Schedule')
-        }
-
-        
-
-
-    }
 
   return (
     <>
