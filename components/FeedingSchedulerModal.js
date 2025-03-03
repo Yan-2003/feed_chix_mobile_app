@@ -2,14 +2,11 @@ import { View, Text, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import styles from '../styles/styles'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import axios from 'axios';
-import {API_URL} from "@env"
-
 
 export default function FeedingSchedulerModal({open, close, setfeedingSchedule, feedingSchedule, add_schedule}) {
 
     const [mode, setMode] = useState('time');
-
+ 
 
     const addFeddingDate = (event, selectedDate) => {
         const currentDate = selectedDate || feedingSchedule;

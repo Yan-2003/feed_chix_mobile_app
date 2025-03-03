@@ -44,11 +44,12 @@ export default function MangeFoodScreen({navigation}){
             console.log(response.data)
             setfeedingScheduleList(response.data)
             console.log(feedingScheduleList)
-            
+            return setisLoading(false)
         } catch (error) {   
             console.log(error)
+            return setisLoading(false)
         }
-        setisLoading(false)
+        
     }
 
 
@@ -78,15 +79,19 @@ export default function MangeFoodScreen({navigation}){
             if(response){
                 console.log(response.data)
                 Alert.alert('Succesfully Added Schedule')
-                return close(false)
+                get_schedules()
+                setisOpenModal(false)
+                return setisLoading(false)
             }
             
         } catch (error) {
             console.log(error)
             Alert.alert('Unable to Add Schedule')
+            get_schedules()
+            setisOpenModal(false)
+            return setisLoading(false)
         }
-        get_schedules()
-        setisLoading(false)
+       
     }
 
 
@@ -101,19 +106,22 @@ export default function MangeFoodScreen({navigation}){
             
                 if(response){
                     console.log(response.data)
-                    return Alert.alert('Item Deleted Successfully.')
+                    Alert.alert('Item Deleted Successfully.')
+                    get_schedules()
+                    setisOpenModal(false)
+                    return setisLoading(false)
                 }
         } catch (error) {
             console.log(error)
-            return Alert.alert('Item Failed to Delete.')
+            Alert.alert('Item Failed to Delete.')
+            get_schedules()
+            setisOpenModal(false)
+            return setisLoading(false)
         }
-        get_schedules()
-        setisLoading(false)
     }
 
     useEffect(() => {
         getCHickenInfo() 
-        
         get_schedules()
 
     }, []);
