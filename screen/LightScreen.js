@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, Text, Switch, TouchableOpacity, Image } from 'react-native'
 import { useState, useEffect } from 'react';
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -16,7 +16,7 @@ export default function LightScreen( { navigation }) {
 
   const [IsLoading, setIsLoading] = useState(false);
 
-
+  const [autoRecommendLight, setautoRecommendLight] = useState(false);
 
   const [TurnOn, setTurnOn] = useState(new Date());
 
@@ -125,6 +125,11 @@ export default function LightScreen( { navigation }) {
   }
 
 
+  const autoRecommendLightFunction = (payload) =>{
+      payload == true ? setautoRecommendLight(false) : setautoRecommendLight(true)
+  }
+
+
 
   useEffect(() => {
     getSchedule()
@@ -163,6 +168,8 @@ export default function LightScreen( { navigation }) {
               </TouchableOpacity>
           }
 
+          <Text style={styles.text_sml}>{ "( Tap the Bulb to turn On of Off Light )"}</Text>
+
           <View style={styles.time_schedule}>
             <Text>Turn On</Text>
             <DateTimePicker
@@ -184,12 +191,23 @@ export default function LightScreen( { navigation }) {
               is24Hour={false} // Set to false for 12-hour format
               display="default"
               onChange={onChangeTurnOff}
-            />
+            /> 
           </View>
 
           <TouchableOpacity style={styles.submit_btn} onPress={()=> submit()}>
-            <Text>Submit</Text>
+            <Text>Schedule Light</Text>
           </TouchableOpacity>
+
+          <View style={styles.autoRecommendLight}>
+            <View>
+              <Text style={styles.text_lg}>Auto Light in Temperature.</Text>
+              <Text style={styles.text_sml}>{ "( This settings will turn The light (On or Off) base on the recommended temperature of Chicken )" }</Text>
+            </View>
+            <Switch
+              onValueChange={()=> autoRecommendLightFunction(autoRecommendLight)}
+              value={autoRecommendLight}
+            />
+          </View>
 
 
        </View>

@@ -399,6 +399,23 @@ const styles = StyleSheet.create({
         height : 40
     },
 
+    autoRecommendLight : {
+        width : '80%',
+        flexDirection : 'row',
+        alignItems : 'center',
+        paddingTop : 30,
+        gap: 10,
+    },
+
+    text_sml : {
+        fontSize : 12,
+        color : '#adadad'
+    },
+
+    text_lg : {
+        fontSize : 20,
+    },
+
 });
 
 

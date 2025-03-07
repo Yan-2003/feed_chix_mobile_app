@@ -34,7 +34,7 @@ export default function TemperatureHumidityScreen({navigation}) {
 
   const GetStartedAt = (timestamp) => {
     const date = new Date(timestamp); 
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString('en-US', {  
       month: 'short', 
       day: 'numeric', 
       year: 'numeric', 
