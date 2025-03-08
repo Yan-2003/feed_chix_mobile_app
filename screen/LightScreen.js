@@ -23,6 +23,8 @@ export default function LightScreen( { navigation }) {
   const [TurnOff, setTurnOff] = useState(new Date());
 
 
+
+
   const [mode, setMode] = useState('time');
   
   const [show, setShow] = useState(false);
@@ -125,18 +127,64 @@ export default function LightScreen( { navigation }) {
   }
 
 
-  const autoRecommendLightFunction = (payload) =>{
-      payload == true ? setautoRecommendLight(false) : setautoRecommendLight(true)
+  const autoRecommendLightFunction = async (payload) =>{
+
+    await payload == true ? setautoRecommendLight(false) : setautoRecommendLight(true)
+    
+    try {
+
+
+      if(payload == false){
+          await axios.post(API_URL + '/light/autoLightTemp', {
+            autoLightTemp : true
+          })
+      }else{
+        await axios.post(API_URL + '/light/autoLightTemp', {
+          autoLightTemp : false
+        })
+      }
+      
+      
+      console.log(request.data)
+      
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
+
+  const getautoRecommendLightFunction = async () => {
+
+    try {
+
+      const request = await axios.get(API_URL + '/light/get/lightOptions')
+
+      console.log(request.data)
+
+      return setautoRecommendLight(request.data.autoLightTemp)
+
+    } catch (error) {
+        console.log(error)
+    }
+
+
+
   }
 
 
 
   useEffect(() => {
     getSchedule()
+    getautoRecommendLightFunction()
+
     const realTime_lightStatus = setInterval(getLightStatus , 1000)
 
     return () =>{
       clearImmediate(realTime_lightStatus)
+    
+    
+    
     }
 
 
