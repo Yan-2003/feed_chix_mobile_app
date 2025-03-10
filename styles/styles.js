@@ -416,6 +416,13 @@ const styles = StyleSheet.create({
         fontSize : 20,
     },
 
+    reload : {
+        marginTop : 20,
+        padding : 20,
+        borderRadius : 15,
+        backgroundColor : '#adadad'
+    },
+
 });
 
 

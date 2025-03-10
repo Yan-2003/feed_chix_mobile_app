@@ -33,6 +33,7 @@ export default function DashboardScreen({ navigation }) {
         } catch (error) {
             console.error(error)
             console.log('Unable to Connect:[Web Server API]')
+            navigation.navigate('Reload')
         }
     }
 
@@ -46,6 +47,7 @@ export default function DashboardScreen({ navigation }) {
         } catch (error) {
             console.error(error)
             console.log('Unable to Connect:[Web Server API]')
+            navigation.navigate('Reload')
         }
     }
 
@@ -59,6 +61,7 @@ export default function DashboardScreen({ navigation }) {
         } catch (error) {
             console.error(error)
             console.log('Unable to Connect:[Web Server API]')
+            navigation.navigate('Reload')
         }
     }
 
@@ -70,6 +73,7 @@ export default function DashboardScreen({ navigation }) {
         } catch (error) {
           console.error(error)
           console.log('Unable to Connect:[Web Server API]')
+          navigation.navigate('Reload')
         }
       }
 
@@ -84,6 +88,7 @@ export default function DashboardScreen({ navigation }) {
         } catch (error) {
           console.error(error)
           console.log('Unable to Connect:[Web Server API]')
+          navigation.navigate('Reload')
         }
       }
 
