@@ -18,6 +18,8 @@ export default function LightScreen( { navigation }) {
 
   const [autoRecommendLight, setautoRecommendLight] = useState(false);
 
+  const [silentNotification, setsilentNotification] = useState(false);
+
   const [TurnOn, setTurnOn] = useState(new Date());
 
   const [TurnOff, setTurnOff] = useState(new Date());
@@ -133,14 +135,15 @@ export default function LightScreen( { navigation }) {
     
     try {
 
-
       if(payload == false){
-          await axios.post(API_URL + '/light/autoLightTemp', {
-            autoLightTemp : true
+          await axios.post(API_URL + '/light/lightOptions', {
+            autoLightTemp : true,
+            silentNotification: silentNotification,
           })
       }else{
-        await axios.post(API_URL + '/light/autoLightTemp', {
-          autoLightTemp : false
+        await axios.post(API_URL + '/light/lightOptions', {
+          autoLightTemp : false,
+          silentNotification: silentNotification,
         })
       }
       
@@ -153,8 +156,32 @@ export default function LightScreen( { navigation }) {
     
   }
 
+  const silentNotificationFunction = async (payload) =>{
+    await payload == true ? setsilentNotification(false) : setsilentNotification(true)
 
-  const getautoRecommendLightFunction = async () => {
+    try {
+      if(payload == false){
+        await axios.post(API_URL + '/light/lightOptions', {
+          autoLightTemp : autoRecommendLight,
+          silentNotification: true
+        })
+      }else{
+        await axios.post(API_URL + '/light/lightOptions', {
+          autoLightTemp : autoRecommendLight,
+          silentNotification : false
+        })
+      }
+      
+      console.log(request.data)
+      
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
+
+  const getLightOptions = async () => {
 
     try {
 
@@ -162,21 +189,18 @@ export default function LightScreen( { navigation }) {
 
       console.log(request.data)
 
-      return setautoRecommendLight(request.data.autoLightTemp)
+      setautoRecommendLight(request.data.autoLightTemp)
+      setsilentNotification(request.data.silentNotification)
 
     } catch (error) {
         console.log(error)
     }
 
-
-
   }
-
-
 
   useEffect(() => {
     getSchedule()
-    getautoRecommendLightFunction()
+    getLightOptions()
 
     const realTime_lightStatus = setInterval(getLightStatus , 1000)
 
@@ -246,7 +270,7 @@ export default function LightScreen( { navigation }) {
             <Text>Schedule Light</Text>
           </TouchableOpacity>
 
-          <View style={styles.autoRecommendLight}>
+          <View style={styles.settingContainer}>
             <View>
               <Text style={styles.text_lg}>Auto Light in Temperature.</Text>
               <Text style={styles.text_sml}>{ "( This settings will turn The light (On or Off) base on the recommended temperature of Chicken )" }</Text>
@@ -257,11 +281,17 @@ export default function LightScreen( { navigation }) {
             />
           </View>
 
-
+          <View style={styles.settingContainer}>
+            <View>
+              <Text style={styles.text_lg}>Silent Notification</Text>
+              <Text style={styles.text_sml}>{ "( This settings will silent the notification for the lights function. )" }</Text>
+            </View>
+            <Switch
+              onValueChange={()=> silentNotificationFunction(silentNotification)}
+              value={silentNotification}
+            />
+          </View>
        </View>
-
-
-
     </SafeAreaView>
   )
 }

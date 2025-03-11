@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
         height : 40
     },
 
-    autoRecommendLight : {
+    settingContainer : {
         width : '80%',
         flexDirection : 'row',
         alignItems : 'center',
