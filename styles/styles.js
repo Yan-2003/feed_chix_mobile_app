@@ -400,7 +400,7 @@ const styles = StyleSheet.create({
     },
 
     settingContainer : {
-        width : '80%',
+        width : '90%',
         flexDirection : 'row',
         alignItems : 'center',
         paddingTop : 30,

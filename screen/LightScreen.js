@@ -20,6 +20,8 @@ export default function LightScreen( { navigation }) {
 
   const [silentNotification, setsilentNotification] = useState(false);
 
+  const [disableSchedulingLights, setDisableSchedulingLights] = useState(false);
+
   const [TurnOn, setTurnOn] = useState(new Date());
 
   const [TurnOff, setTurnOff] = useState(new Date());
@@ -139,11 +141,13 @@ export default function LightScreen( { navigation }) {
           await axios.post(API_URL + '/light/lightOptions', {
             autoLightTemp : true,
             silentNotification: silentNotification,
+            disableSchedule : disableScheduleLights
           })
       }else{
         await axios.post(API_URL + '/light/lightOptions', {
           autoLightTemp : false,
           silentNotification: silentNotification,
+          disableSchedule : disableScheduleLights
         })
       }
       
@@ -181,6 +185,36 @@ export default function LightScreen( { navigation }) {
   }
 
 
+  const disableScheduleLights = async (payload) =>{
+
+    await payload == true ? setDisableSchedulingLights(false) : setDisableSchedulingLights(true)
+
+    try {
+
+      if(payload == false){
+          await axios.post(API_URL + '/light/lightOptions', {
+            autoLightTemp : autoRecommendLight,
+            silentNotification: silentNotification,
+            disableSchedule : true
+          })
+      }else{
+        await axios.post(API_URL + '/light/lightOptions', {
+          autoLightTemp : autoRecommendLight,
+          silentNotification: silentNotification,
+          disableSchedule : false
+        })
+      }
+      
+      
+      console.log(request.data)
+      
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
+
   const getLightOptions = async () => {
 
     try {
@@ -191,6 +225,7 @@ export default function LightScreen( { navigation }) {
 
       setautoRecommendLight(request.data.autoLightTemp)
       setsilentNotification(request.data.silentNotification)
+      setDisableSchedulingLights(request.data.disableSchedule)
 
     } catch (error) {
         console.log(error)
@@ -206,9 +241,7 @@ export default function LightScreen( { navigation }) {
 
     return () =>{
       clearImmediate(realTime_lightStatus)
-    
-    
-    
+      
     }
 
 
@@ -242,33 +275,40 @@ export default function LightScreen( { navigation }) {
 
           <Text style={styles.text_sml}>{ "( Tap the Bulb to turn On of Off Light )"}</Text>
 
-          <View style={styles.time_schedule}>
-            <Text>Turn On</Text>
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={TurnOn}
-              mode={mode}
-              is24Hour={false} // Set to false for 12-hour format
-              display="default"
-              onChange={onChangeTurnON}
-            />
-          </View>
+          { 
+          
+            !disableSchedulingLights ? 
+              <>
+                <View style={styles.time_schedule}>
+                <Text>Turn On</Text>
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={TurnOn}
+                  mode={mode}
+                  is24Hour={false} // Set to false for 12-hour format
+                  display="default"
+                  onChange={onChangeTurnON}
+                />
+                </View>
 
-          <View style={styles.time_schedule}>
-            <Text>Turn Off</Text>
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={TurnOff}
-              mode={mode}
-              is24Hour={false} // Set to false for 12-hour format
-              display="default"
-              onChange={onChangeTurnOff}
-            /> 
-          </View>
+                <View style={styles.time_schedule}>
+                  <Text>Turn Off</Text>
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={TurnOff}
+                    mode={mode}
+                    is24Hour={false} // Set to false for 12-hour format
+                    display="default"
+                    onChange={onChangeTurnOff}
+                  /> 
+                </View>
 
-          <TouchableOpacity style={styles.submit_btn} onPress={()=> submit()}>
-            <Text>Schedule Light</Text>
-          </TouchableOpacity>
+                <TouchableOpacity style={styles.submit_btn} onPress={()=> submit()}>
+                  <Text>Schedule Light</Text>
+                </TouchableOpacity>
+              </>
+            : <></>
+          }
 
           <View style={styles.settingContainer}>
             <View>
@@ -289,6 +329,16 @@ export default function LightScreen( { navigation }) {
             <Switch
               onValueChange={()=> silentNotificationFunction(silentNotification)}
               value={silentNotification}
+            />
+          </View>
+          <View style={styles.settingContainer}>
+            <View>
+              <Text style={styles.text_lg}>Disable Scheduling Lights</Text>
+              <Text style={styles.text_sml}>{ "( This settings will force you to manually turn On or Off lights. )" }</Text>
+            </View>
+            <Switch
+              onValueChange={()=> disableScheduleLights(disableSchedulingLights) }
+              value={disableSchedulingLights}
             />
           </View>
        </View>
