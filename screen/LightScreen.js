@@ -141,13 +141,13 @@ export default function LightScreen( { navigation }) {
           await axios.post(API_URL + '/light/lightOptions', {
             autoLightTemp : true,
             silentNotification: silentNotification,
-            disableSchedule : disableScheduleLights
+            disableSchedule : disableSchedulingLights
           })
       }else{
         await axios.post(API_URL + '/light/lightOptions', {
           autoLightTemp : false,
           silentNotification: silentNotification,
-          disableSchedule : disableScheduleLights
+          disableSchedule : disableSchedulingLights
         })
       }
       
@@ -167,12 +167,14 @@ export default function LightScreen( { navigation }) {
       if(payload == false){
         await axios.post(API_URL + '/light/lightOptions', {
           autoLightTemp : autoRecommendLight,
-          silentNotification: true
+          silentNotification: true,
+          disableSchedule : disableSchedulingLights
         })
       }else{
         await axios.post(API_URL + '/light/lightOptions', {
           autoLightTemp : autoRecommendLight,
-          silentNotification : false
+          silentNotification : false,
+          disableSchedule : disableSchedulingLights
         })
       }
       
