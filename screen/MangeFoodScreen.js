@@ -16,7 +16,7 @@ export default function MangeFoodScreen({navigation}){
 
     const [feedingSchedule, setfeedingSchedule] = useState(new Date());
 
-    const foodWeight = 0;
+    const [foodWeight, setfoodWeight] = useState(0);
 
     const [isLoading, setisLoading] = useState(false);
 
@@ -29,6 +29,18 @@ export default function MangeFoodScreen({navigation}){
         } catch (error) {
             console.error(error)
             console.log('Unable to Connect:[Web Server API]')
+        }
+    }
+
+    const fetchFoodWeight = async ()=>{
+        try {
+            const response = await axios.get( API_URL + "/food/weight")
+            setfoodWeight(response.data.weight)
+            console.log(response.data)
+        } catch (error) {
+            console.error(error)
+            console.log('Unable to Connect:[Web Server API]')
+            navigation.navigate('Reload')
         }
     }
 
@@ -139,7 +151,7 @@ export default function MangeFoodScreen({navigation}){
         <View style={styles.body}>
             <View style={styles.food_content_box}>
                 <Image source={require('../assets/Images/chicken-rice.png')} style={styles.food_img} />
-                <Text style={styles.text_l}> { (foodWeight / 1000 ).toFixed(1)} Kg /  <Text style={styles.text_l} > { foodWeight } gm</Text></Text>
+                <Text style={styles.text_l}> { (foodWeight / 1000 ).toFixed(1)} Kg</Text>
                 <Text >Weight Load</Text>
             </View>
             <Text style={styles.text_note}>Food will automatically adjusted base on the week age of the chicken and will be devided by {chickenNum} chicken you can update this configuration {"<Enviroment>"} </Text>

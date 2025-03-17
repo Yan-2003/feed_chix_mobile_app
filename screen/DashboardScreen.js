@@ -155,7 +155,7 @@ export default function DashboardScreen({ navigation }) {
                             <Text style={styles.text_label}>Food Storage</Text>
                             <View style={styles.food_content_box}>
                                 <Image source={require('../assets/Images/chicken-rice.png')} style={styles.food_img} />
-                                <Text> { (foodWeight / 1000 ).toFixed(1)} Kg /  <Text style={styles.font_s_gray} > { foodWeight } gm</Text></Text>
+                                <Text> { (foodWeight / 1000 ).toFixed(1)} Kg</Text>
                                 <Text style={styles.font_s_gray} >Weight Load</Text>
                             </View>
                         </View>
