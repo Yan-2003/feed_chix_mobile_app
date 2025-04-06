@@ -3,8 +3,7 @@ import React, { Component } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styles from '../styles/styles'
 
-export default class ReloadScreen extends Component {
-  render({navigation}) {
+export default function ReloadScreen({navigation}) {
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.body}>
@@ -16,5 +15,4 @@ export default class ReloadScreen extends Component {
         </View>
       </SafeAreaView>
     )
-  }
 }

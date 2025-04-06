@@ -22,18 +22,20 @@ export default function DashboardScreen({ navigation }) {
 
     const [Age, setAge] = useState(0);
 
+    const temp_rec = [32, 30, 26, 22, 20]
+
 
     console.log("API URL: ", API_URL)
 
     const fetchFoodWeight = async ()=>{
         try {
             const response = await axios.get( API_URL + "/food/weight")
-            setfoodWeight(response.data.weight)
             console.log(response.data)
+            return setfoodWeight(response.data.weight)
         } catch (error) {
             console.error(error)
             console.log('Unable to Connect:[Web Server API]')
-            navigation.navigate('Reload')
+            return navigation.navigate('Reload')
         }
     }
 
@@ -43,11 +45,11 @@ export default function DashboardScreen({ navigation }) {
             const response = await axios.get( API_URL + "/tempHumid")
             setTemperature(response.data.temperature)
             setHumidity(response.data.humidity)
-            console.log(response.data)
+            return console.log(response.data)
         } catch (error) {
             console.error(error)
             console.log('Unable to Connect:[Web Server API]')
-            navigation.navigate('Reload')
+            return navigation.navigate('Reload')
         }
     }
 
@@ -56,24 +58,24 @@ export default function DashboardScreen({ navigation }) {
     const fetchWaterCapacity = async ()=>{
         try {
             const response = await axios.get( API_URL + "/water/capacity")
-            setwaterCapacity(response.data.capacity)
             console.log(response.data)
+            return setwaterCapacity(response.data.capacity)
         } catch (error) {
             console.error(error)
             console.log('Unable to Connect:[Web Server API]')
-            navigation.navigate('Reload')
+            return navigation.navigate('Reload')
         }
     }
 
     const getLightStatus = async () =>{
         try {
           const response = await axios.get( API_URL + "/light/status")
-          setLightStatus(response.data.light_status)
           console.log(response.data)
+          return setLightStatus(response.data.light_status)
         } catch (error) {
           console.error(error)
           console.log('Unable to Connect:[Web Server API]')
-          navigation.navigate('Reload')
+          return navigation.navigate('Reload')
         }
       }
 
@@ -83,12 +85,12 @@ export default function DashboardScreen({ navigation }) {
           const response = await axios.get( API_URL + "/chicken")
           console.log("chicken_info: ")
           console.log(response.data)
-          setAge(response.data.week_age)
+          return setAge(response.data.week_age)
 
         } catch (error) {
           console.error(error)
           console.log('Unable to Connect:[Web Server API]')
-          navigation.navigate('Reload')
+          return navigation.navigate('Reload')
         }
       }
 
@@ -136,12 +138,12 @@ export default function DashboardScreen({ navigation }) {
                 <TouchableOpacity style={styles.environtment_content} onPress={()=> navigation.navigate("TempHumid")}>
                     <Text style={styles.text_label_light}>Environment</Text>
                     <View style={styles.environment_content_box}>
-                        <View style={styles.environment_box}>
+                        <View style={Math.floor(Temperature) > temp_rec[Age] || Math.floor(Temperature) < temp_rec[Age] ? styles.warning_environment_box : styles.environment_box}>
                             <Image source={require('../assets/Images/thermometer.png')} style={styles.env_img} />
                             <Text style={styles.f_big}> { Temperature } °C</Text>
                             <Text style={styles.font_s_gray} >Temperature</Text>
                         </View>
-                        <View style={styles.environment_box}>
+                        <View style={Humidity > 80 || Humidity < 60 ? styles.warning_environment_box : styles.environment_box }>
                             <Image source={require('../assets/Images/humidity.png')} style={styles.env_img} />
                             <Text style={styles.f_big}> { Humidity } %</Text>
                             <Text style={styles.font_s_gray} >Humidity</Text>
@@ -151,7 +153,7 @@ export default function DashboardScreen({ navigation }) {
                 </TouchableOpacity>
                 <View style={styles.food_water_container}>
                     <View>
-                        <View style={styles.food_content}>
+                        <View style={ ((foodWeight / 1000 ).toFixed(1)) < 0.1 ? [styles.food_content, styles.border_danger] : styles.food_content}>
                             <Text style={styles.text_label}>Food Storage</Text>
                             <View style={styles.food_content_box}>
                                 <Image source={require('../assets/Images/chicken-rice.png')} style={styles.food_img} />

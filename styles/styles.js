@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
     },
 
     border_danger : {
-        borderColor : '#d74338'
+        borderColor : '#d74338',
+        backgroundColor : '#fc6868'
     },
 
     text_danger : {
@@ -82,6 +83,15 @@ const styles = StyleSheet.create({
         width : 100, 
         height : 100,
         backgroundColor : 'white',
+        borderRadius : 15,
+    },
+
+    warning_environment_box : {
+        justifyContent : 'center', 
+        alignItems : 'center',
+        width : 100, 
+        height : 100,
+        backgroundColor : '#fc6868',
         borderRadius : 15,
     },
 
@@ -162,6 +172,8 @@ const styles = StyleSheet.create({
         borderWidth : 1,
         borderRadius : 15,
     }, 
+
+
 
     food_content_box : {
         marginTop : 5,
