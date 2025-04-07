@@ -7,7 +7,6 @@ import NotifcationScreen from './screen/NatificationScreen'
 import TemperatureHumidityScreen from './screen/TemperatureHumidityScreen';
 import registerNNPushToken from 'native-notify';
 import MangeFoodScreen from './screen/MangeFoodScreen';
-import ReloadScreen from './screen/ReloadScreen';
 const Stack = createNativeStackNavigator();
 
 
