@@ -78,10 +78,10 @@ export default function DashboardScreen({ navigation }) {
 
       const getCHickenInfo  = async ()=>{
         try {
-          const response = await axios.get( API_URL + "/chicken")
-          console.log("chicken_info: ")
-          console.log(response.data)
-
+            const response = await axios.get( API_URL + "/chicken")
+            console.log("chicken_info: ")
+            console.log(response.data)
+            setAge(response.data.week_age)
         } catch (error) {
           console.error(error)
           console.log('Unable to Connect:[Web Server API]')
