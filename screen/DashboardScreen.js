@@ -35,7 +35,6 @@ export default function DashboardScreen({ navigation }) {
         } catch (error) {
             console.error(error)
             console.log('Unable to Connect:[Web Server API]')
-            return navigation.navigate('Reload')
         }
     }
 
@@ -49,7 +48,6 @@ export default function DashboardScreen({ navigation }) {
         } catch (error) {
             console.error(error)
             console.log('Unable to Connect:[Web Server API]')
-            return navigation.navigate('Reload')
         }
     }
 
@@ -63,7 +61,6 @@ export default function DashboardScreen({ navigation }) {
         } catch (error) {
             console.error(error)
             console.log('Unable to Connect:[Web Server API]')
-            return navigation.navigate('Reload')
         }
     }
 
@@ -75,7 +72,6 @@ export default function DashboardScreen({ navigation }) {
         } catch (error) {
           console.error(error)
           console.log('Unable to Connect:[Web Server API]')
-          return navigation.navigate('Reload')
         }
       }
 
@@ -85,12 +81,10 @@ export default function DashboardScreen({ navigation }) {
           const response = await axios.get( API_URL + "/chicken")
           console.log("chicken_info: ")
           console.log(response.data)
-          return setAge(response.data.week_age)
 
         } catch (error) {
           console.error(error)
           console.log('Unable to Connect:[Web Server API]')
-          return navigation.navigate('Reload')
         }
       }
 

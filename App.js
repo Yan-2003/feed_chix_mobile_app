@@ -20,7 +20,6 @@ export default function App() {
   return (
     <NavigationContainer o>
       <Stack.Navigator initialRouteName='Dashboard ' screenOptions={{ headerShown : false }}>
-        <Stack.Screen name='Reload' component={ReloadScreen} />
         <Stack.Screen name='Dashboard' component={ DashboardScreen }/>
         <Stack.Screen name='Notification' component={ NotifcationScreen} />
         <Stack.Screen name='LightControl' component={ LightScreen }/>
