@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import {API_URL} from '@env'
 import FeedingSchedulerModal from '../components/FeedingSchedulerModal'
+import FoodingSetupWeightModal from '../components/FoodingSetupWeightModal'
 export default function MangeFoodScreen({navigation}){
 
     const [chickenNum, setchickenNum] = useState(0);
@@ -19,6 +20,8 @@ export default function MangeFoodScreen({navigation}){
     const [foodWeight, setfoodWeight] = useState(0);
 
     const [isLoading, setisLoading] = useState(false);
+
+    const [isOpenModalFoodWeight, setisOpenModalFoodWeight] = useState(false);
 
     const getCHickenInfo  = async ()=>{
         try {
@@ -135,13 +138,15 @@ export default function MangeFoodScreen({navigation}){
     useEffect(() => {
         getCHickenInfo() 
         get_schedules()
-
+        fetchFoodWeight()
+        
     }, []);
 
 
     return (
       <SafeAreaView style={styles.safeArea}>
         <FeedingSchedulerModal open={isOpenModal} close={setisOpenModal} setfeedingSchedule={setfeedingSchedule} feedingSchedule={feedingSchedule} add_schedule={add_schedule}  />
+        <FoodingSetupWeightModal isopen={isOpenModalFoodWeight} close={setisOpenModalFoodWeight}/>
         <View style={styles.header}>
             <TouchableOpacity style={styles.backBtn} onPress={()=> navigation.navigate('Dashboard')}>
                 <Image style={styles.backicon} source={require('../assets/Images/back.png')} />
@@ -173,7 +178,10 @@ export default function MangeFoodScreen({navigation}){
                     : <View style={styles.body}><Text>No Schedule. 🥺</Text></View> 
             }
         </ScrollView>
-       <TouchableOpacity onPress={()=> setisOpenModal(true) } style={styles.add_feeding_sched_bnt} ><Text style={styles.text_light}>Add Feeding Schedule</Text></TouchableOpacity>
+        <View style={styles.food_bnts}>
+            <TouchableOpacity onPress={()=> setisOpenModal(true) } style={styles.add_feeding_sched_bnt} ><Text style={styles.text_light}>Add Feeding Schedule</Text></TouchableOpacity>
+            <TouchableOpacity onPress={()=> setisOpenModalFoodWeight(true) } style={styles.add_feeding_sched_bnt} ><Text style={styles.text_light}>Setup Food Weight</Text></TouchableOpacity>
+        </View>
       </SafeAreaView>
     )
 }

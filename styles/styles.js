@@ -435,6 +435,13 @@ const styles = StyleSheet.create({
         backgroundColor : '#adadad'
     },
 
+    food_bnts : {
+        flexDirection : 'row',
+        justifyContent :'center',
+        alignItems : 'center',
+        gap : 10,
+    }
+
 });
 
 
