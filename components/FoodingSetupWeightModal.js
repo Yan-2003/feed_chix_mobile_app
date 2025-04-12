@@ -25,7 +25,7 @@ export default function FoodingSetupWeightModal({isopen, close}) {
 
         try {
             const response = await axios.post(API_URL + "/food/food_storage/setup", {
-                weight : raw_weight,
+                raw_weight : raw_weight,
             })
     
             const data = response.data
