@@ -175,7 +175,7 @@ export default function DashboardScreen({ navigation }) {
                         <View style={styles.water_content}>
                             <Text style={styles.text_label}>Water Storage</Text>
                             <View style={styles.food_content_box}>
-                                <Image source={require('../assets/Images/water-dispenser.png')} style={styles.water_img} />
+                                <Image source={require('../assets/Images/water_dispenser.png')} style={styles.water_img} />
                                 <Text>{waterCapacity} %</Text>
                                 <Text style={styles.font_s_gray} >Capacity</Text>
                             </View>
