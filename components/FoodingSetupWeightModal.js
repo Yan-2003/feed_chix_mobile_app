@@ -25,13 +25,14 @@ export default function FoodingSetupWeightModal({isopen, close}) {
 
         try {
             const response = await axios.post(API_URL + "/food/food_storage/setup", {
-                raw_weight : raw_weight,
+                raw_weight : raw_weight
             })
-    
-            const data = response.data
-    
-            console.log("Weight Successfully Calibrated Weight Reading:", data)
-            
+               
+            if(response){
+                Alert.alert('Weight Successfully Calibrated')
+                console.log("Weight Successfully Calibrated Weight Reading:", response.data)
+            }
+
         } catch (error) {
             console.log(error)
         }
