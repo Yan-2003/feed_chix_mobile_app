@@ -139,7 +139,15 @@ export default function MangeFoodScreen({navigation}){
         getCHickenInfo() 
         get_schedules()
         fetchFoodWeight()
-        
+
+
+        const realtime_fetchFoodWeight = setInterval(techFoodWeight, 2000)
+
+        return () =>{
+            clearImmediate(realtime_fetchFoodWeight)
+        }
+
+
     }, []);
 
 
