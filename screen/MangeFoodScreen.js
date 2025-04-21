@@ -141,7 +141,7 @@ export default function MangeFoodScreen({navigation}){
         fetchFoodWeight()
 
 
-        const realtime_fetchFoodWeight = setInterval(techFoodWeight, 2000)
+        const realtime_fetchFoodWeight = setInterval(fetchFoodWeight, 2000)
 
         return () =>{
             clearImmediate(realtime_fetchFoodWeight)
