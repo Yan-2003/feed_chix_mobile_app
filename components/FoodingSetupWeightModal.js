@@ -60,7 +60,7 @@ export default function FoodingSetupWeightModal({isopen, close}) {
                         <View style={styles.modal_main}>
                             <Text>Calibrating Food Weight</Text>
                             <View style={styles.body}>
-                                <Text>Reading Raw Weight.. {raw_weight}Kg</Text>
+                                <Text>Reading Raw Weight.. {raw_weight}g</Text>
                             </View>
                             <View style={styles.modal_button_section}>
                                 <TouchableOpacity onPress={()=> calibrate()} style={styles.add_feeding_sched_bnt} ><Text style={styles.text_light}>Configure</Text></TouchableOpacity>
